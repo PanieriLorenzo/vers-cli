@@ -3,8 +3,7 @@
 > Simple CLI tools for bumping and parsing version numbers
 
 ![Crates.io Version](https://img.shields.io/crates/v/vers-cli)
-![docs.rs](https://img.shields.io/docsrs/vers-cli)
-![Crates.io License](https://img.shields.io/crates/l/vers-cli)
+![GitHub License](https://img.shields.io/github/license/PanieriLorenzo/vers-cli)
 
 ## Goals
 
