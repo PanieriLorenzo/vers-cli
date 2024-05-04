@@ -2,6 +2,13 @@
 name = "vers-cli"
 version = "0.1.0"
 edition = "2021"
+description = "Simple CLI tools for bumping and parsing version numbers"
+license-file = "LICENSE"
+readme = "README.md"
+authors = ["Lorenzo Panieri"]
+repository = "https://github.com/PanieriLorenzo/vers-cli"
+keywords = ["version", "versioning", "semantic", "semver", "cli"]
+categories = ["command-line-utilities", "development-tools"]
 
 [dependencies]
 atty = "0.2.14"
