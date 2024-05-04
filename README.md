@@ -14,29 +14,29 @@
 ## Examples
 
 ```bash
-semcheck 0.1.0 | semcheck bump patch
+vers-cli 0.1.0 | vers-cli bump patch
 # -> 0.1.1
 
 # understands "v" prefix
-semcheck v1.0.0 | semcheck bump major | semcheck bump patch
+vers-cli v1.0.0 | vers-cli bump major | vers-cli bump patch
 # -> v2.0.1
 
 # understands (some) pre-releases
-semcheck v1.0.0-rc.1 | semcheck release
+vers-cli v1.0.0-rc.1 | vers-cli release
 # -> v1.0.0
-semcheck v1.0.0-rc.1 | semcheck bump rc
+vers-cli v1.0.0-rc.1 | vers-cli bump rc
 # -> v1.0.0-rc.2
 
 # invariant over metadata
-semcheck v1.0.0-rc.1+500 | semcheck release
+vers-cli v1.0.0-rc.1+500 | vers-cli release
 # -> v1.0.0+500
 
 # can bump metadata
-semcheck v1.0.0+500 | semcheck bump build
+vers-cli v1.0.0+500 | vers-cli bump build
 # -> v1.0.0+501
 
 # linting
-semcheck 01.0.0 --lint
+vers-cli 01.0.0 --lint
 # -> error: leading zeros not allowed
 # -> hint: use `1.0.0` instead
 ```
