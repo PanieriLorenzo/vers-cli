@@ -63,3 +63,30 @@ fn pre_build() -> Result<()> {
         .stdout(predicates::str::contains("v1.3.0-foo+bar"));
     Ok(())
 }
+
+#[test]
+fn validate() -> Result<()> {
+    let mut cmd = bin()?;
+    cmd.arg("validate").arg("v1.0.0").arg("--quiet");
+    cmd.assert().success();
+    Ok(())
+}
+
+#[test]
+fn validate_neg() -> Result<()> {
+    let mut cmd = bin()?;
+    cmd.arg("validate").arg("v01.0.0").arg("--quiet");
+    cmd.assert().failure();
+    Ok(())
+}
+
+#[test]
+fn validate_strict_neg() -> Result<()> {
+    let mut cmd = bin()?;
+    cmd.arg("validate")
+        .arg("v1.0.0")
+        .arg("--strict")
+        .arg("--quiet");
+    cmd.assert().failure();
+    Ok(())
+}

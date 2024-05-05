@@ -2,7 +2,10 @@ use clap::{Args, Parser, Subcommand, ValueEnum};
 use semver::Version;
 use serde::Serialize;
 use serde_json::json;
-use std::{collections::HashMap, process::Stdio};
+use std::{
+    collections::HashMap,
+    process::{exit, Stdio},
+};
 use toml::{self, map::Map};
 
 #[derive(Parser)]
@@ -17,6 +20,8 @@ struct Cli {
 enum Commands {
     Bump(BumpArgs),
     Parse(ParseArgs),
+    Validate(ValidateArgs),
+    Compare(CompareArgs),
 }
 
 #[derive(Args)]
@@ -36,6 +41,21 @@ struct ParseArgs {
     strict: bool,
 }
 
+#[derive(Args)]
+struct ValidateArgs {
+    tag: Option<String>,
+    #[arg(short, long)]
+    strict: bool,
+    #[arg(short, long)]
+    quiet: bool,
+}
+
+#[derive(Args)]
+struct CompareArgs {
+    operator: Operator,
+    rhs: String,
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, ValueEnum)]
 enum Segments {
     Major,
@@ -47,6 +67,16 @@ enum Segments {
 enum Formats {
     Json,
     Toml,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, ValueEnum)]
+enum Operator {
+    Lt,
+    Gt,
+    Le,
+    Ge,
+    Eq,
+    Ne,
 }
 
 impl ToString for Formats {
@@ -143,6 +173,22 @@ fn main() {
                 Formats::Toml => vers2toml(sv),
             };
             println!("{}", s);
+        }
+        Commands::Validate(ValidateArgs { tag, strict, quiet }) => {
+            if quiet {
+                match parse(tag.unwrap(), strict).0 {
+                    Ok(_) => exit(0),
+                    Err(_) => exit(1),
+                }
+            } else {
+                match parse(tag.unwrap(), strict).0 {
+                    Ok(_) => println!("true"),
+                    Err(_) => println!("false"),
+                }
+            }
+        }
+        Commands::Compare(CompareArgs { operator, rhs }) => {
+            todo!()
         }
     }
 }
